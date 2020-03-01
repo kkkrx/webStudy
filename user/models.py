@@ -1,7 +1,7 @@
 import datetime
 
 from django.db import models
-
+from django.utils.functional import cached_property
 
 # Create your models here.
 
@@ -18,13 +18,13 @@ class User(models.Model):
     phoneNum = models.CharField(max_length=16, unique=True)
 
     sex = models.CharField(max_length=8, choices=SEX)
-    birthYear = models.IntegerField()
-    birthMonth = models.IntegerField()
-    birthDay = models.IntegerField()
+    birthYear = models.IntegerField(default=2000)
+    birthMonth = models.IntegerField(default=1)
+    birthDay = models.IntegerField(default=1)
     avatar = models.CharField(max_length=256)
     location = models.CharField(max_length=32)
 
-    @property
+    @cached_property
     def age(self):
         """
         计算用户年龄
@@ -40,8 +40,7 @@ class User(models.Model):
         该用户的配置项
         """
         if not hasattr(self, 'myProfile'):
-            myProfile, created = Profile.objects.get_or_create(id=self.id)
-            self.myProfile = myProfile
+            self.myProfile, _ = Profile.objects.get_or_create(id=self.id)
         return self.myProfile
 
 

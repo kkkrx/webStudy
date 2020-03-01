@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from user.logic import sendVerifyCode
+
 
 # Create your views here.
 

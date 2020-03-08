@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 from user.logic import sendVerifyCode
 
 
@@ -10,6 +8,8 @@ def getVerifyCode(request):
     手机注册
     """
     phoneNum = request.Get.get('phoneNum')
+    response = sendVerifyCode(phoneNum)
+
     pass
 
 
